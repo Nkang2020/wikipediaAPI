@@ -1,0 +1,51 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="styles.css" rel="stylesheet" type="text/css">
+<script>
+$(document).ready(function(){
+  $("#search").click(function(){
+    var value = $("#searchTerm").val();
+    var url = "https://en.wikipedia.org/w/api.php?action=opensearch&search="+value+"&format=json&callback=?"
+    $.getJSON(url, function(data){
+      console.log(data);
+      for(var i=0;i<data[1].length;i++){
+     $("#output").prepend("<li><a href="+data[3][i]+">"+data[1][i]+"</a><p>"+data[2][i]+"</p></li>") 
+      }
+    });
+  });
+  $("#searchTerm").keypress(function(e){
+    if(e.which==13){
+      $("#search").click();
+    }
+  });
+});
+</script>
+
+
+</head>
+
+<head>
+</head>
+
+<body>
+  <div class="container">
+    <div class="text-center">
+  <div id="header">
+    <h1>Wikipedia Search API</h1>
+  <a href="https://en.wikipedia.org/wiki/Special:Random" target="blank"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/1122px-Wikipedia-logo-v2.svg.png"></a>
+  </div>
+    </div>
+  <div id="first">
+  <span>Search anything here.</span>
+  <input class="form-control" id="searchTerm" autofocus>
+  <button class="btn btn-primary" type="button" id="search">Search</button>
+  </div>
+    <div class="col-md-12">
+  <ul id="output"></ul>
+    </div>
+  </div>
+</body>
+</html>
